@@ -11,7 +11,13 @@ class CatalogPage extends Page {
     get addToCartButton() { return $('#content > div.product-list > div > div.right > div > input')};
     get cartWithItem() { return $('#cart-total')};
     get checkoutLink() { return $('#cart > div.content > div.checkout > a:nth-child(2)')};
-    
+    get topLoginButton() { return $('#welcome > table > tbody > tr > td:nth-child(1) > a > input')};
+    get userNameField() { return $('#content > div.login-content > div.right > form > div > input[type=text]:nth-child(4)')};
+    get passwordField() { return $('#content > div.login-content > div.right > form > div > input[type=password]:nth-child(9)')};
+    get loginButton() { return $('#content > div.login-content > div.right > form > div > input.button') };
+    //get userLoggedIn() { return $('#welcome > a:nth-child(3)') };
+    get logoutLink() { return $('#welcome > a:nth-child(3)') };
+   
     /**
      * Method to click first item
      */
@@ -19,6 +25,11 @@ class CatalogPage extends Page {
         utilObj.waitForDefaultTimeOut()
         this.firstItem.click();
     }
+
+    clickTopLoginButton() {
+        utilObj.waitForDefaultTimeOut();
+        this.topLoginButton.click();
+}
 
     clickOpenCartTotal() {
         utilObj.waitForDefaultTimeOut();
@@ -28,6 +39,50 @@ class CatalogPage extends Page {
         this.checkoutLink.click();
         browser.pause(5000);
     }
+
+    fillUserNameField() {
+        utilObj.waitForDefaultTimeOut();
+        this.userNameField.click();
+        this.userNameField.clearValue();
+        this.userNameField.setValue('testersof@gmail.com');
+
+    };
+    
+    
+    fillPasswordField() {
+        utilObj.waitForDefaultTimeOut();
+        this.passwordField.click();
+        this.passwordField.clearValue();
+        this.passwordField.setValue('qwerty25');
+    };
+
+
+    clickLoginButton() {
+        utilObj.waitForDefaultTimeOut();
+        this.loginButton.click();
+    };
+
+    /*veifyUserIsLoggedIn() {
+        utilObj.waitForDefaultTimeOut();
+        
+        if (this.userLoggedIn.getText() !== 'Logi välja') {
+            throw "User didn't log in";
+        }
+    };*/
+
+    veifyUserIsLoggedIn() {
+        utilObj.waitForDefaultTimeOut();
+        if (this.logoutLink.isDisplayed()==1) {
+            
+            this.logoutLink.click();
+        }
+        else{
+            
+            throw "link does not exist"
+        }
+        
+    };
+    
 
   /*  verifyCheckoutLinkVisible() {
      // utilObj.waitForDefaultTimeout();
@@ -123,7 +178,7 @@ class CatalogPage extends Page {
     /**
      * Verify admin can changes its password
      */
-    verifyAdminCanChangeCredentials(){
+    verifyAdminCanChangeCredentials() {
         utilObj.waitForDefaultTimeOut();
         super.adminNameClass.click();
         super.adminDivModel.waitForExist(30000);
